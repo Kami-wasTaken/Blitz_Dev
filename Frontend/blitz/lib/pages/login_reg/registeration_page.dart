@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:blitz/pages/login_reg/input_field.dart';
 import 'package:flutter/material.dart';
 
 class RegisterationPage extends StatefulWidget {
@@ -40,21 +41,58 @@ class _RegisterationPageState extends State<RegisterationPage> {
 
                   //form
 
-                  Form(
-                      child: Column(
-                    children: [
-                      TextFormField(
-                        style: TextStyle(color: Colors.grey),
-                        decoration: InputDecoration(
-                            hintText: "Username",
-                            hintStyle: TextStyle(color: Colors.grey)),
-                        cursorColor: Colors.black87,
-                        cursorHeight: 30,
-                        cursorWidth: 2,
-                        cursorRadius: Radius.circular(20),
-                      ),
-                    ],
-                  ))
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: Form(
+                        child: Column(
+                      children: [
+                        InputField(hintText: 'Username'),
+                        InputField(hintText: 'Phone Number'),
+                        InputField(hintText: 'School'),
+                        InputField(hintText: 'Class'),
+                        InputField(hintText: 'Board of Education'),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 75.0),
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.shade200,
+                                      offset: Offset.zero,
+                                      blurRadius: 10,
+                                      spreadRadius: 2,
+                                    ),
+                                  ]),
+                              child: Center(
+                                  child: Text(
+                                "Continue",
+                                style: TextStyle(
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.fontFamily,
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.fontSize,
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.fontWeight,
+                                    color: Colors.grey.shade50),
+                              )),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                  )
 
                   // register button
                 ],
