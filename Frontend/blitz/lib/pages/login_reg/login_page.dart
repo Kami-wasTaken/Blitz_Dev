@@ -1,6 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:blitz/pages/login_reg/input_field.dart';
+import 'package:blitz/pages/login_reg/otp_sheet.dart';
+import 'package:blitz/pages/login_reg/prompt_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +14,49 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  Future displayModalBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) =>
+          OTPSheet(controller: _otpController, verificationID: requiredID),
+    );
+  }
+
+  final _phoneController = TextEditingController();
+  String requiredID = '';
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  // ignore: prefer_final_fields
+  TextEditingController _otpController = TextEditingController();
+  signInWithNumber() async {
+    UserCredential credential;
+    User user;
+    try {
+      await auth.verifyPhoneNumber(
+          phoneNumber: _phoneController.text.trim(),
+          verificationCompleted: (PhoneAuthCredential authCredential) async {
+            await auth.signInWithCredential(authCredential).then((value) {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PromptPage()));
+            });
+          },
+          verificationFailed: ((e) {
+            print(e.message);
+          }),
+          codeSent: (String verificationID, [int? forceResendingToken]) {
+            requiredID = verificationID;
+            print(_phoneController.text.trim());
+            setState(() {});
+            displayModalBottomSheet(context);
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            verificationId = verificationId;
+          },
+          timeout: Duration(seconds: 30));
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,11 +88,15 @@ class _LoginPageState extends State<LoginPage> {
                       child: Form(
                           child: Column(
                         children: [
-                          InputField(hintText: "Phone Number"),
+                          InputField(
+                              hintText: "Phone Number",
+                              controller: _phoneController),
                           Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                signInWithNumber();
+                              },
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 height: 65,

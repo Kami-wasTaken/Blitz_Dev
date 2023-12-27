@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last, sized_box_for_whitespace
 
 import 'package:blitz/pages/login_reg/input_field.dart';
+import 'package:blitz/pages/login_reg/otp_sheet.dart';
 import 'package:flutter/material.dart';
 
 class RegisterationPage extends StatefulWidget {
@@ -11,6 +12,17 @@ class RegisterationPage extends StatefulWidget {
 }
 
 class _RegisterationPageState extends State<RegisterationPage> {
+  Future displayModalBottomSheet(BuildContext context) {
+    return showModalBottomSheet(
+        context: context, builder: (context) => Container());
+  }
+
+  final _phoneController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _schoolController = TextEditingController();
+  final _classController = TextEditingController();
+  final _boardController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,15 +58,32 @@ class _RegisterationPageState extends State<RegisterationPage> {
                     child: Form(
                         child: Column(
                       children: [
-                        InputField(hintText: 'Username'),
-                        InputField(hintText: 'Phone Number'),
-                        InputField(hintText: 'School'),
-                        InputField(hintText: 'Class'),
-                        InputField(hintText: 'Board of Education'),
+                        InputField(
+                          hintText: 'Username',
+                          controller: _usernameController,
+                        ),
+                        InputField(
+                          hintText: 'Phone Number',
+                          controller: _phoneController,
+                        ),
+                        InputField(
+                          hintText: 'School',
+                          controller: _schoolController,
+                        ),
+                        InputField(
+                          hintText: 'Class',
+                          controller: _classController,
+                        ),
+                        InputField(
+                          hintText: 'Board of Education',
+                          controller: _boardController,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 75.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              displayModalBottomSheet(context);
+                            },
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 65,

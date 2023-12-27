@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
-  const InputField({super.key, required this.hintText});
+  const InputField(
+      {super.key, required this.hintText, required this.controller});
 
   final String hintText;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class InputField extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: TextFormField(
+            controller: controller,
             style: Theme.of(context).textTheme.bodyMedium,
             decoration: InputDecoration(
               hintText: hintText,
