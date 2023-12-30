@@ -81,9 +81,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 75.0),
                           child: GestureDetector(
-                            onTap: () {
-                              displayModalBottomSheet(context);
-                            },
+                            onTap: () {},
                             child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 65,

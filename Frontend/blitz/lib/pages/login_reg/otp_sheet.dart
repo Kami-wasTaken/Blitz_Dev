@@ -2,6 +2,7 @@
 
 import 'dart:ffi';
 
+import 'package:blitz/pages/dashboard/dashboard.dart';
 import 'package:blitz/pages/login_reg/prompt_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,7 @@ class OTPSheet extends StatelessWidget {
                 child: PinCodeTextField(
                   controller: controller,
                   appContext: context,
+                  textStyle: Theme.of(context).textTheme.headlineMedium,
                   length: 6,
                   pinTheme: PinTheme(
                     shape: PinCodeFieldShape.box,
@@ -60,7 +62,7 @@ class OTPSheet extends StatelessWidget {
                         Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => PromptPage()))
+                                    builder: (context) => Dashboard()))
                             .catchError((e) {
                           print(e);
                         });

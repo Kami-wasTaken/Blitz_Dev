@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ThemeData lightMode = ThemeData(
@@ -8,6 +9,14 @@ ThemeData lightMode = ThemeData(
     hintColor: Color.fromRGBO(219, 237, 235, 1),
     colorScheme: ColorScheme.light(
       background: Colors.grey.shade50,
+    ),
+    cupertinoOverrideTheme: CupertinoThemeData(
+      primaryColor: Colors.black,
+    ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: Colors.black,
+      selectionColor: Color.fromRGBO(219, 237, 235, 1),
+      selectionHandleColor: Color.fromRGBO(219, 237, 235, 1),
     ),
     textTheme: TextTheme(
         displayLarge: TextStyle(

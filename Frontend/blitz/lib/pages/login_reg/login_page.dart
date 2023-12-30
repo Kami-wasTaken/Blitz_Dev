@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, unnecessary_brace_in_string_interps
 
-import 'package:blitz/pages/login_reg/input_field.dart';
+import 'package:blitz/pages/dashboard/dashboard.dart';
 import 'package:blitz/pages/login_reg/otp_sheet.dart';
+import 'package:blitz/pages/login_reg/phone_input.dart';
 import 'package:blitz/pages/login_reg/prompt_page.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +24,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  String countryCode = '+91';
+  String countryName = 'IN';
+
+  void changeCountry(Country country) {
+    print(country.phoneCode);
+    countryCode = ("+${country.phoneCode}");
+    countryName = country.countryCode;
+    setState(() {});
+  }
+
   final _phoneController = TextEditingController();
   String requiredID = '';
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -32,15 +44,16 @@ class _LoginPageState extends State<LoginPage> {
     User user;
     try {
       await auth.verifyPhoneNumber(
-          phoneNumber: _phoneController.text.trim(),
+          phoneNumber: ("$countryCode${_phoneController.text.trim()}"),
           verificationCompleted: (PhoneAuthCredential authCredential) async {
             await auth.signInWithCredential(authCredential).then((value) {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PromptPage()));
+                  MaterialPageRoute(builder: (context) => Dashboard()));
             });
           },
           verificationFailed: ((e) {
             print(e.message);
+            print(_phoneController.text.trim());
           }),
           codeSent: (String verificationID, [int? forceResendingToken]) {
             requiredID = verificationID;
@@ -88,9 +101,12 @@ class _LoginPageState extends State<LoginPage> {
                       child: Form(
                           child: Column(
                         children: [
-                          InputField(
-                              hintText: "Phone Number",
-                              controller: _phoneController),
+                          PhoneInput(
+                            controller: _phoneController,
+                            countryCode: countryCode,
+                            countryName: countryName,
+                            countryChange: (country) => changeCountry(country),
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: GestureDetector(
