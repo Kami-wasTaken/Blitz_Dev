@@ -7,16 +7,21 @@ class ChoiceButton extends StatelessWidget {
       {super.key,
       required this.buttonTitle,
       required this.buttonDes,
-      required this.buttonColor});
+      required this.buttonColor,
+      required this.navigationTarget});
 
   final String buttonTitle;
   final String buttonDes;
   final Color buttonColor;
+  final Widget navigationTarget;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => navigationTarget));
+      },
       child: Container(
         decoration: BoxDecoration(
           color: buttonColor,

@@ -175,7 +175,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey.shade200,
+                                    color: Colors.grey.shade300,
                                     offset: Offset.zero,
                                     blurRadius: 10,
                                     spreadRadius: 2,

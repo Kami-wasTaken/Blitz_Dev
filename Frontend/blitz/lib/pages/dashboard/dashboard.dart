@@ -3,6 +3,7 @@
 import 'package:blitz/pages/dashboard/barchart/progress_chart.dart';
 import 'package:blitz/pages/dashboard/choice_button.dart';
 import 'package:blitz/pages/dashboard/recent_test.dart';
+import 'package:blitz/pages/test_gen/subject_selection.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -79,13 +80,16 @@ class _DashboardState extends State<Dashboard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ChoiceButton(
-                      buttonTitle: "Take Test",
-                      buttonDes: "Practice your skills",
-                      buttonColor: Theme.of(context).hintColor),
+                    buttonTitle: "Take Test",
+                    buttonDes: "Practice your skills",
+                    buttonColor: Theme.of(context).hintColor,
+                    navigationTarget: SubjectSelection(),
+                  ),
                   ChoiceButton(
                       buttonTitle: "History",
                       buttonDes: "Review your tests",
-                      buttonColor: Color.fromARGB(255, 255, 237, 172)),
+                      buttonColor: Color.fromARGB(255, 255, 237, 172),
+                      navigationTarget: SubjectSelection()),
                 ],
               ),
             )
