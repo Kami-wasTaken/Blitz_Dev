@@ -4,19 +4,42 @@ import 'dart:ffi';
 
 import 'package:blitz/pages/dashboard/dashboard.dart';
 import 'package:blitz/pages/login_reg/prompt_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OTPSheet extends StatelessWidget {
-  const OTPSheet({
+  OTPSheet({
     super.key,
-    required this.controller,
     required this.verificationID,
+    this.username,
+    this.phoneNumber,
+    this.school,
+    this.grade,
+    this.board,
+    required this.isRegister,
   });
 
-  final TextEditingController controller;
+  TextEditingController controller = TextEditingController();
   final String verificationID;
+  final String? username;
+  final String? phoneNumber;
+  final String? school;
+  final String? grade;
+  final String? board;
+  final bool isRegister;
+
+  Future addUserDetails(String username, String phoneNumber, String school,
+      String grade, String board) async {
+    await FirebaseFirestore.instance.collection('Users').add({
+      'Username': username,
+      "PhoneNumber": phoneNumber,
+      "School": school,
+      "Class": grade,
+      "Board": board,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +81,17 @@ class OTPSheet extends StatelessWidget {
                             verificationId: verificationID,
                             smsCode: controller.text.trim());
                     auth.signInWithCredential(_credential).then((result) {
-                      if (result != null) {
-                        Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Dashboard()))
-                            .catchError((e) {
-                          print(e);
-                        });
+                      if (isRegister) {
+                        addUserDetails(
+                            username!, phoneNumber!, school!, grade!, board!);
                       }
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Dashboard()))
+                          .catchError((e) {
+                        print(e);
+                      });
                     });
                   },
                 ),

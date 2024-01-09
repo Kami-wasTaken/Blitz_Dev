@@ -68,7 +68,16 @@ class PhoneInput extends StatelessWidget {
                                 vertical: 20, horizontal: 15),
                             searchTextStyle:
                                 Theme.of(context).textTheme.bodyMedium,
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                            textStyle: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.fontFamily,
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.fontSize),
                             inputDecoration: InputDecoration(
                                 contentPadding: EdgeInsets.all(20),
                                 focusedBorder: OutlineInputBorder(
@@ -93,7 +102,15 @@ class PhoneInput extends StatelessWidget {
                       size: 30,
                       color: Colors.grey,
                     )),
-                Text("${countryName} ${countryCode}"),
+                Text(
+                  "${countryName} ${countryCode}",
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontFamily:
+                          Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                      fontSize:
+                          Theme.of(context).textTheme.bodyMedium?.fontSize),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: SizedBox(

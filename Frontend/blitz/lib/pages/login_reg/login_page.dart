@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_print, unnecessary_brace_in_string_interps
 
 import 'package:blitz/pages/dashboard/dashboard.dart';
+import 'package:blitz/pages/login_reg/common_functions.dart';
 import 'package:blitz/pages/login_reg/otp_sheet.dart';
 import 'package:blitz/pages/login_reg/phone_input.dart';
 import 'package:blitz/pages/login_reg/prompt_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,13 +21,16 @@ class _LoginPageState extends State<LoginPage> {
   Future displayModalBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       context: context,
-      builder: (context) =>
-          OTPSheet(controller: _otpController, verificationID: requiredID),
+      builder: (context) => OTPSheet(
+        verificationID: requiredID,
+        isRegister: false,
+      ),
     );
   }
 
   String countryCode = '+91';
   String countryName = 'IN';
+  final firestoreInstance = FirebaseFirestore.instance;
 
   void changeCountry(Country country) {
     print(country.phoneCode);
@@ -36,37 +41,42 @@ class _LoginPageState extends State<LoginPage> {
 
   final _phoneController = TextEditingController();
   String requiredID = '';
+  String inputError = '';
   final FirebaseAuth auth = FirebaseAuth.instance;
   // ignore: prefer_final_fields
-  TextEditingController _otpController = TextEditingController();
+
   signInWithNumber() async {
-    UserCredential credential;
-    User user;
-    try {
-      await auth.verifyPhoneNumber(
-          phoneNumber: ("$countryCode${_phoneController.text.trim()}"),
-          verificationCompleted: (PhoneAuthCredential authCredential) async {
-            await auth.signInWithCredential(authCredential).then((value) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Dashboard()));
-            });
-          },
-          verificationFailed: ((e) {
-            print(e.message);
-            print(_phoneController.text.trim());
-          }),
-          codeSent: (String verificationID, [int? forceResendingToken]) {
-            requiredID = verificationID;
-            print(_phoneController.text.trim());
-            setState(() {});
-            displayModalBottomSheet(context);
-          },
-          codeAutoRetrievalTimeout: (String verificationId) {
-            verificationId = verificationId;
-          },
-          timeout: Duration(seconds: 30));
-    } catch (e) {
-      print(e);
+    if (await phoneExists(
+        ("$countryCode${_phoneController.text.trim()}"), firestoreInstance)) {
+      inputError = "Phone number already exists";
+      setState(() {});
+    } else {
+      try {
+        await auth.verifyPhoneNumber(
+            phoneNumber: ("$countryCode${_phoneController.text.trim()}"),
+            verificationCompleted: (PhoneAuthCredential authCredential) async {
+              await auth.signInWithCredential(authCredential).then((value) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Dashboard()));
+              });
+            },
+            verificationFailed: ((e) {
+              print(e.message);
+              print(_phoneController.text.trim());
+            }),
+            codeSent: (String verificationID, [int? forceResendingToken]) {
+              requiredID = verificationID;
+              print(_phoneController.text.trim());
+              setState(() {});
+              displayModalBottomSheet(context);
+            },
+            codeAutoRetrievalTimeout: (String verificationId) {
+              verificationId = verificationId;
+            },
+            timeout: Duration(seconds: 30));
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -148,6 +158,12 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 75,
+                            child: Center(
+                              child: Text(inputError),
+                            ),
+                          )
                         ],
                       )),
                     )
