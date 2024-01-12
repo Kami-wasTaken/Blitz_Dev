@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:blitz/pages/test_gen/subject.dart';
+import 'package:blitz/pages/test_gen/test_options.dart';
 import 'package:flutter/material.dart';
 
 class SubjectSelection extends StatefulWidget {
@@ -60,7 +61,10 @@ class _SubjectSelectionState extends State<SubjectSelection> {
               Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TestOptions()));
+                  },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     height: 65,

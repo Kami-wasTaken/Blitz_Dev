@@ -19,11 +19,11 @@ class RecentTest extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.grey[50],
+          color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade300,
+              color: Theme.of(context).shadowColor,
               offset: Offset.zero,
               blurRadius: 10,
               spreadRadius: 2,

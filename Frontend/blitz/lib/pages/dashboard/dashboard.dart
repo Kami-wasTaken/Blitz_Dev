@@ -88,7 +88,7 @@ class _DashboardState extends State<Dashboard> {
                   ChoiceButton(
                       buttonTitle: "History",
                       buttonDes: "Review your tests",
-                      buttonColor: Color.fromARGB(255, 255, 237, 172),
+                      buttonColor: Theme.of(context).cardColor,
                       navigationTarget: SubjectSelection()),
                 ],
               ),

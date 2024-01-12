@@ -40,11 +40,16 @@ class ChoiceButton extends StatelessWidget {
                 children: [
                   Text(
                     buttonTitle,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.bodyLarge?.fontSize,
+                        fontWeight:
+                            Theme.of(context).textTheme.bodyLarge?.fontWeight,
+                        color: Colors.grey[900]),
                   ),
                   Text(buttonDes,
                       style: TextStyle(
-                          color: Colors.grey[700],
+                          color: Colors.grey[800],
                           fontSize: Theme.of(context)
                               .textTheme
                               .bodyMedium

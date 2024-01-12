@@ -7,6 +7,10 @@ ThemeData lightMode = ThemeData(
     brightness: Brightness.light,
     primaryColor: Color.fromRGBO(154, 207, 206, 1),
     hintColor: Color.fromRGBO(219, 237, 235, 1),
+    shadowColor: Colors.grey[300],
+    disabledColor: Colors.grey[200],
+    highlightColor: Color.fromARGB(255, 103, 198, 149),
+    cardColor: Color.fromRGBO(251, 232, 196, 1),
     colorScheme: ColorScheme.light(
       background: Colors.grey.shade50,
     ),
@@ -64,9 +68,13 @@ ThemeData darkMode = ThemeData(
   brightness: Brightness.dark,
   primaryColor: Color.fromRGBO(219, 237, 235, 1),
   hintColor: Color.fromRGBO(162, 214, 213, 1),
+  shadowColor: Color.fromARGB(255, 16, 16, 16),
+  disabledColor: Color.fromARGB(255, 42, 42, 42),
+  cardColor: Color.fromRGBO(231, 186, 99, 1),
   colorScheme: ColorScheme.dark(
     background: Color.fromRGBO(28, 30, 29, 1),
   ),
+  highlightColor: Color.fromARGB(255, 34, 105, 68),
   textTheme: TextTheme(
       displayLarge: TextStyle(
         fontFamily: 'GeneralSans',

@@ -42,12 +42,12 @@ class Chart extends StatelessWidget {
                 barRods: [
                   BarChartRodData(
                     toY: data.y,
-                    color: Color.fromARGB(255, 185, 232, 172),
+                    color: Theme.of(context).highlightColor,
                     width: 20,
                     backDrawRodData: BackgroundBarChartRodData(
                       show: true,
                       toY: 100,
-                      color: Colors.grey[200],
+                      color: Theme.of(context).disabledColor,
                     ),
                   ),
                 ],

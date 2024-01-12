@@ -11,10 +11,10 @@ class ProgressChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey[50],
+          color: Theme.of(context).colorScheme.background,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade300,
+              color: Theme.of(context).shadowColor,
               offset: Offset.zero,
               blurRadius: 10,
               spreadRadius: 2,
@@ -39,13 +39,13 @@ class ProgressChart extends StatelessWidget {
                     decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.shade300,
+                            color: Theme.of(context).shadowColor,
                             offset: Offset.zero,
                             blurRadius: 10,
                             spreadRadius: 2,
                           ),
                         ],
-                        color: Colors.grey[50],
+                        color: Theme.of(context).colorScheme.background,
                         borderRadius: BorderRadius.circular(20)),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
