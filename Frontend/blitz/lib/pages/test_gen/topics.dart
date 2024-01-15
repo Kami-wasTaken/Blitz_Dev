@@ -4,9 +4,10 @@ import 'package:blitz/pages/test_gen/topic_sheet.dart';
 import 'package:flutter/material.dart';
 
 class Topics extends StatelessWidget {
-  Topics({super.key, required this.topicsList});
+  Topics({super.key, required this.topicsList, required this.searchController});
 
   final List<String> topicsList;
+  final TextEditingController searchController;
   List<String> topicsSelected = [
     "trignometry",
     "quadratics",
@@ -16,10 +17,14 @@ class Topics extends StatelessWidget {
 
   Future displayModalBottomSheet(BuildContext context) {
     return showModalBottomSheet(
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        context: context,
-        builder: (context) => TopicSheet());
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (context) => TopicSheet(
+        topicsList: topicsList,
+        searchController: searchController,
+      ),
+    );
   }
 
   @override

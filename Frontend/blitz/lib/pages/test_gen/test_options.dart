@@ -14,6 +14,7 @@ class _TestOptionsState extends State<TestOptions> {
   double testDifficulty = 0;
   String testDifficultyStr = 'Easy';
   double questionsCount = 0;
+  final searchController = TextEditingController();
   List<String> topics = [
     'Trigonometry',
     'Binomial Theorum',
@@ -126,6 +127,7 @@ class _TestOptionsState extends State<TestOptions> {
               //Topics Selection
               Topics(
                 topicsList: topics,
+                searchController: searchController,
               ),
 
               //Number of questions
