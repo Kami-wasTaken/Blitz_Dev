@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:blitz/pages/test_gen/topic_sheet.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +7,12 @@ class Topics extends StatelessWidget {
   Topics({super.key, required this.topicsList});
 
   final List<String> topicsList;
-  List<String> topicsSelected = [];
+  List<String> topicsSelected = [
+    "trignometry",
+    "quadratics",
+    "algebra",
+    "integrals"
+  ];
 
   Future displayModalBottomSheet(BuildContext context) {
     return showModalBottomSheet(
@@ -37,7 +42,7 @@ class Topics extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(top: 20.0, right: 20.0, left: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -58,6 +63,35 @@ class Topics extends StatelessWidget {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: Wrap(
+                direction: Axis.horizontal,
+                children: topicsSelected.map((s) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                    child: Chip(
+                      label: Text(s),
+                      labelStyle: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w400,
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.fontFamily),
+                      padding: EdgeInsets.all(6),
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(style: BorderStyle.none),
+                          borderRadius: BorderRadius.circular(40)),
+                      backgroundColor: Theme.of(context).hintColor,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          )
         ]),
       ),
     );

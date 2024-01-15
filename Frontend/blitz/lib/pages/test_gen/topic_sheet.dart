@@ -15,7 +15,9 @@ class TopicSheet extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 40),
-        child: Column(children: [SearchBar()]),
+        child: Column(children: [
+          SearchBar(),
+        ]),
       ),
     );
   }
