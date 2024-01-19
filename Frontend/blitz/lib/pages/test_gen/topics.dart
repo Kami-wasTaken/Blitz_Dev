@@ -4,23 +4,23 @@ import 'package:blitz/pages/test_gen/topic_sheet.dart';
 import 'package:flutter/material.dart';
 
 class Topics extends StatelessWidget {
-  Topics({super.key, required this.topicsList, required this.searchController});
+  Topics(
+      {super.key,
+      required this.topicsList,
+      required this.searchController,
+      required this.topicSelected});
 
-  final List<String> topicsList;
+  final List topicsList;
   final TextEditingController searchController;
-  List<String> topicsSelected = [
-    "trignometry",
-    "quadratics",
-    "algebra",
-    "integrals"
-  ];
-
+  String topicLabel = '';
+  final Function(String) topicSelected;
   Future displayModalBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       context: context,
       builder: (context) => TopicSheet(
+        topicSelected: topicSelected,
         topicsList: topicsList,
         searchController: searchController,
       ),
@@ -72,28 +72,37 @@ class Topics extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Align(
               alignment: Alignment.topLeft,
-              child: Wrap(
-                direction: Axis.horizontal,
-                children: topicsSelected.map((s) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 2.0),
-                    child: Chip(
-                      label: Text(s),
-                      labelStyle: TextStyle(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w400,
-                          fontFamily: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.fontFamily),
-                      padding: EdgeInsets.all(6),
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(style: BorderStyle.none),
-                          borderRadius: BorderRadius.circular(40)),
-                      backgroundColor: Theme.of(context).hintColor,
-                    ),
-                  );
-                }).toList(),
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: 120,
+                  child: Wrap(
+                    direction: Axis.horizontal,
+                    children: topicsList.map((s) {
+                      if (s[1]) {
+                        topicLabel = s[0];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                          child: Chip(
+                            label: Text(topicLabel),
+                            labelStyle: TextStyle(
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w400,
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.fontFamily),
+                            padding: EdgeInsets.all(6),
+                            shape: RoundedRectangleBorder(
+                                side: BorderSide(style: BorderStyle.none),
+                                borderRadius: BorderRadius.circular(40)),
+                            backgroundColor: Theme.of(context).hintColor,
+                          ),
+                        );
+                      }
+                      return SizedBox.shrink();
+                    }).toList(),
+                  ),
+                ),
               ),
             ),
           )

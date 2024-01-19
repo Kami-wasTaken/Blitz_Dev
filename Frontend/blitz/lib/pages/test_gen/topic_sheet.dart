@@ -4,9 +4,15 @@ import 'package:blitz/pages/login_reg/input_field.dart';
 import 'package:flutter/material.dart';
 
 class TopicSheet extends StatelessWidget {
-  const TopicSheet(
-      {super.key, required this.topicsList, required this.searchController});
-  final List<String> topicsList;
+  const TopicSheet({
+    super.key,
+    required this.topicsList,
+    required this.searchController,
+    required this.topicSelected,
+  });
+  final List topicsList;
+  final Function(String) topicSelected;
+
   final TextEditingController searchController;
 
   @override
@@ -84,6 +90,15 @@ class TopicSheet extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: topicsList.length,
                   itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      if (topicsList[index][1]) {
+                        topicsList[index][1] = false;
+                        topicSelected('Selected');
+                      } else {
+                        topicsList[index][1] = true;
+                        topicSelected('Deselected');
+                      }
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Container(
@@ -97,7 +112,7 @@ class TopicSheet extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(topicsList[index]),
+                              Text(topicsList[index][0]),
                               Icon(Icons.add_box_outlined)
                             ],
                           ),

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:blitz/pages/test_gen/test_preview.dart';
 import 'package:blitz/pages/test_gen/topics.dart';
 import 'package:flutter/material.dart';
 
@@ -15,15 +16,19 @@ class _TestOptionsState extends State<TestOptions> {
   String testDifficultyStr = 'Easy';
   double questionsCount = 0;
   final searchController = TextEditingController();
-  List<String> topics = [
-    'Trigonometry',
-    'Binomial Theorum',
-    'polynomial',
-    'Geometry',
-    'Integration',
-    'Quadratic Functions',
-    'Functions'
+  List topics = [
+    ['Trigonometry', false],
+    ['Binomial Theorum', false],
+    ['polynomial', false],
+    ['Geometry', false],
+    ['Integration', false],
+    ['Quadratic Functions', false],
+    ['Functions', false]
   ];
+
+  void topicSelected(String string) {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +133,7 @@ class _TestOptionsState extends State<TestOptions> {
               Topics(
                 topicsList: topics,
                 searchController: searchController,
+                topicSelected: topicSelected,
               ),
 
               //Number of questions
@@ -196,7 +202,16 @@ class _TestOptionsState extends State<TestOptions> {
 
               //Continue Button
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TestPreview(
+                              testName: "Math 1",
+                              testDifficulty: testDifficultyStr,
+                              testQuestionsCount:
+                                  questionsCount.toInt().toString())));
+                },
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 65,
