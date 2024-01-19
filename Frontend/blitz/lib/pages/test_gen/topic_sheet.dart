@@ -1,20 +1,21 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_unnecessary_containers
-
-import 'package:blitz/pages/login_reg/input_field.dart';
 import 'package:flutter/material.dart';
 
-class TopicSheet extends StatelessWidget {
-  const TopicSheet({
-    super.key,
-    required this.topicsList,
-    required this.searchController,
-    required this.topicSelected,
-  });
+class TopicSheet extends StatefulWidget {
+  const TopicSheet(
+      {super.key,
+      required this.searchController,
+      required this.topicsList,
+      required this.topicSelected});
+
+  final TextEditingController searchController;
   final List topicsList;
   final Function(String) topicSelected;
 
-  final TextEditingController searchController;
+  @override
+  State<TopicSheet> createState() => _TopicSheetState();
+}
 
+class _TopicSheetState extends State<TopicSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,7 +55,7 @@ class TopicSheet extends StatelessWidget {
                     SizedBox(
                       width: 300,
                       child: TextFormField(
-                        controller: searchController,
+                        controller: widget.searchController,
                         style: Theme.of(context).textTheme.bodyMedium,
                         decoration: InputDecoration(
                           hintText: "Search",
@@ -88,16 +89,17 @@ class TopicSheet extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: ListView.builder(
-                  itemCount: topicsList.length,
+                  itemCount: widget.topicsList.length,
                   itemBuilder: (context, index) => GestureDetector(
                     onTap: () {
-                      if (topicsList[index][1]) {
-                        topicsList[index][1] = false;
-                        topicSelected('Selected');
+                      if (widget.topicsList[index][1]) {
+                        widget.topicsList[index][1] = false;
+                        widget.topicSelected('Selected');
                       } else {
-                        topicsList[index][1] = true;
-                        topicSelected('Deselected');
+                        widget.topicsList[index][1] = true;
+                        widget.topicSelected('Deselected');
                       }
+                      setState(() {});
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
@@ -105,15 +107,19 @@ class TopicSheet extends StatelessWidget {
                         height: 60,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Theme.of(context).hintColor,
+                          color: widget.topicsList[index][1] == true
+                              ? Theme.of(context).hintColor
+                              : Theme.of(context).colorScheme.background,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(topicsList[index][0]),
-                              Icon(Icons.add_box_outlined)
+                              Text(widget.topicsList[index][0]),
+                              Icon(widget.topicsList[index][1] == true
+                                  ? Icons.close_rounded
+                                  : Icons.add_box_outlined)
                             ],
                           ),
                         ),
